@@ -52,7 +52,7 @@ public interface TeacherDao {
             @Result(column = "tel", property = "tel"),
             @Result(column = "info", property = "info"),
     })
-    Teacher findByUserId(String userId);
+    Teacher findByUserId(@Param("userId") String userId);
 
     /**
      * 修改教师信息，返回是否成功

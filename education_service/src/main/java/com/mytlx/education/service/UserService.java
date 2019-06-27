@@ -54,4 +54,12 @@ public interface UserService {
      * @return
      */
     boolean auditPermission(String id, String op);
+
+    /**
+     * 通过id查询user信息
+     *
+     * @param id
+     * @return
+     */
+    User findById(String id);
 }

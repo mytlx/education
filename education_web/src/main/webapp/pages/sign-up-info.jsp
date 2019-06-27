@@ -7,47 +7,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-
-
-<c:if test="${sessionScope.user.verification == 3}">
-    <form action="${pageContext.request.contextPath}/education/register" method="post">
-        教育领域：<input type="text" name="subject"/><br>
-        标识码：<input type="text" name="idCode"/><br>
-        店铺地址：<input type="text" name="address"><br>
-        教育适合年龄：<input type="text" name="ageRange"><br>
-        联系方式：<input type="text" name="tel"><br>
-        简介：<textarea name="info" cols="30" rows="10"></textarea><br>
-        <input type="submit" value="提交">
-    </form>
-</c:if>
-
-<c:if test="${sessionScope.user.verification == 2}">
-    <form action="${pageContext.request.contextPath}/teacher/register" method="post">
-        姓名：<input type="text" name="name"/><br>
-        性别：<input type="radio" checked="checked" name="sex" value="male"/>男
-        <input type="radio" name="sex" value="female"/>女 <br>
-        年龄：<input type="text" name="age"/><br>
-        教育领域：<input type="text" name="subject"/><br>
-        从教年限：<input type="text" name="time"/><br>
-        教育适合年龄：<input type="text" name="ageRange"/><br>
-        身份证号：<input type="text" name="idNumber"/><br>
-        联系方式：<input type="text" name="tel"/><br>
-        简介：<textarea name="info" cols="30" rows="10"></textarea><br>
-        <input type="submit" value="提交">
-    </form>
-</c:if>
-
-<c:if test="${sessionScope.user.verification == 1}">
-    <form action="${pageContext.request.contextPath}/parent/register" method="post">
-        孩子姓名：<input type="text" name="childName"/><br>
-        孩子年龄：<input type="text" name="childSex"/><br>
-        孩子性别：<input type="radio" checked="checked" name="childSex" value="male"/>男
-        <input type="radio" name="childSex" value="female"/>女 <br>
-        家长姓名：<input type="text" name="name"><br>
-        联系方式：<input type="text" name="tel"><br>
-        <input type="submit" value="提交">
-    </form>
-</c:if>
 <head>
     <title>注册页面</title>
     <!-- Meta tag Keywords -->
@@ -103,17 +62,9 @@
             <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">请进一步完善信息</h3>
             <%--错误提示--%>
             <h5 id="span1" class="custom-h5">${requestScope.msg}</h5>
-            <c:if test="${sessionScope.user.verification == 3}">
-                <form action="${pageContext.request.contextPath}/education/register" method="post">
-                    教育领域：<input type="text" name="subject"/><br>
-                    标识码：<input type="text" name="idCode"/><br>
-                    店铺地址：<input type="text" name="address"><br>
-                    教育适合年龄：<input type="text" name="ageRange"><br>
-                    联系方式：<input type="text" name="tel"><br>
-                    简介：<textarea name="info" cols="30" rows="10"></textarea><br>
-                    <input type="submit" value="提交">
-                </form>
 
+            <!-- 教育机构 -->
+            <c:if test="${sessionScope.user.verification == 3}">
                 <form action="${pageContext.request.contextPath}/education/register" method="post">
 
                     <div class="form-group">
@@ -141,10 +92,105 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="text-a">简介</label>
-                        <textarea id="text-a" name="info" cols="30" rows="10"></textarea>
+                        <textarea id="text-a" class="form-control" name="info" rows="4"></textarea>
                     </div>
 
-                    <button type="submit" class="btn button-style-w3">Register</button>
+                    <button type="submit" class="btn button-style-w3">Submit</button>
+                </form>
+            </c:if>
+
+            <!-- 个人教师 -->
+            <c:if test="${sessionScope.user.verification == 2}">
+                <form action="${pageContext.request.contextPath}/teacher/register" method="post">
+                    <div class="form-group">
+                        <label class="col-form-label">姓名</label>
+                        <input type="text" class="form-control" placeholder="name" name="name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">性别</label>
+                        <div style="padding-left: 5rem;">
+                            <label for="radio11" class="text-li text-style-w3ls">
+                                <span></span>男
+                            </label>
+                            <input type="radio" id="radio11" checked="checked" name="sex" value="male">
+                            <label for="radio22" class="text-li text-style-w3ls" style="margin-left: 3rem;">
+                                <span></span>女
+                            </label>
+                            <input type="radio" id="radio22" name="sex" value="female">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">年龄</label>
+                        <input type="text" class="form-control" placeholder="age" name="age"
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">教育领域</label>
+                        <input type="text" class="form-control" placeholder="如：数学，语文.." name="subject" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">从教年限</label>
+                        <input type="text" class="form-control" placeholder="**" name="time" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">教育适合年龄</label>
+                        <input type="text" class="form-control" placeholder="如：10-14" name="ageRange"
+                               required="">
+                    </div>
+                    <div>
+                        <label class="col-form-label">身份证号</label>
+                        <input type="text" class="form-control" placeholder="******" name="idNumber"
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">联系方式</label>
+                        <input type="tel" class="form-control" placeholder="1** **** ****" name="tel"
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="text-a1">简介</label>
+                        <textarea id="text-a1" class="form-control" name="info" rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn button-style-w3">Submit</button>
+                </form>
+            </c:if>
+
+            <!-- 学生家长 -->
+            <c:if test="${sessionScope.user.verification == 1}">
+                <form action="${pageContext.request.contextPath}/parent/register" method="post">
+                    <div class="form-group">
+                        <label class="col-form-label">孩子姓名</label>
+                        <input type="text" class="form-control" placeholder="***" name="childName" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">孩子性别</label><br>
+                        <div style="padding-left: 5rem;">
+                            <label for="radio1" class="text-li text-style-w3ls">
+                                <span></span>男
+                            </label>
+                            <input type="radio" id="radio1" checked="checked" name="sex" value="male">
+                            <label for="radio2" class="text-li text-style-w3ls" style="margin-left: 3rem;">
+                                <span></span>女
+                            </label>
+                            <input type="radio" id="radio2" name="sex" value="female">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">孩子年龄</label>
+                        <input type="text" class="form-control" placeholder="**" name="childAge"
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">家长姓名</label>
+                        <input type="text" class="form-control" placeholder="***" name="name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">联系方式</label>
+                        <input type="tel" class="form-control" placeholder="1** **** ****" name="tel"
+                               required="">
+                    </div>
+                    <button type="submit" class="btn button-style-w3">Submit</button>
                 </form>
             </c:if>
         </div>
@@ -166,6 +212,5 @@
 <!-- //move top icon -->
 
 </body>
-
 </html>
 

@@ -3,6 +3,7 @@ package com.mytlx.education.controller;
 import com.mytlx.education.domain.Announcement;
 import com.mytlx.education.domain.User;
 import com.mytlx.education.service.AnnouncementService;
+import com.mytlx.education.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,21 @@ import java.util.List;
 public class AnnouncementController {
 
     private AnnouncementService announcementService;
+    private UserService userService;
 
     @Autowired
-    public AnnouncementController(AnnouncementService announcementService) {
+    public AnnouncementController(AnnouncementService announcementService, UserService userService) {
         this.announcementService = announcementService;
+        this.userService = userService;
     }
 
+    /**
+     * 发布公告
+     *
+     * @param announcement
+     * @param session
+     * @return
+     */
     @RequestMapping("/addAnnounce")
     public ModelAndView addAnnounce(Announcement announcement, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -105,18 +115,21 @@ public class AnnouncementController {
     }
 
     /**
-     * 根据id查找公告，用于修改公告时显示原来公告信息
+     * 根据id查找公告
      *
      * @param id
      * @return
      */
     @RequestMapping("/findById")
-    public ModelAndView findById(int id) {
+    public ModelAndView findById(int id, String op) {
         Announcement announcement = announcementService.findById(id);
         ModelAndView mv = new ModelAndView();
 
         mv.addObject("announcement", announcement);
-        mv.setViewName("update-announcement");
+
+        mv.setViewName("announcement-update");
+        if (op.equals("info"))
+            mv.setViewName("announcement-info");
         return mv;
     }
 

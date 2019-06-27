@@ -133,4 +133,15 @@ public class UserServiceImpl implements UserService {
         }
         return flag == 1;
     }
+
+    /**
+     * 通过id查询user信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public User findById(String id) {
+        return userDao.findById(id);
+    }
 }

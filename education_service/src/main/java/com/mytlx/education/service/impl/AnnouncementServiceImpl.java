@@ -1,11 +1,15 @@
 package com.mytlx.education.service.impl;
 
 import com.mytlx.education.dao.AnnouncementDao;
+import com.mytlx.education.dao.NewsDao;
+import com.mytlx.education.dao.UserDao;
 import com.mytlx.education.domain.Announcement;
+import com.mytlx.education.domain.User;
 import com.mytlx.education.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,10 +21,12 @@ import java.util.List;
 public class AnnouncementServiceImpl implements AnnouncementService {
 
     private AnnouncementDao announcementDao;
+    private UserDao userDao;
 
     @Autowired
-    public AnnouncementServiceImpl(AnnouncementDao announcementDao) {
+    public AnnouncementServiceImpl(AnnouncementDao announcementDao, UserDao userDao) {
         this.announcementDao = announcementDao;
+        this.userDao = userDao;
     }
 
     /**
@@ -31,6 +37,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
      */
     @Override
     public boolean addAnnounce(Announcement announcement) {
+        // 发布公告时，自动添加时间
+        announcement.setTime(new Date());
         int flag = announcementDao.addAnnounce(announcement);
         return flag == 1;
     }
@@ -66,6 +74,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
      */
     @Override
     public boolean updateById(Announcement an) {
+        // 更新公告时，自动更新时间
+        an.setTime(new Date());
         int flag = announcementDao.updateById(an);
         return flag == 1;
     }
@@ -78,7 +88,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
      */
     @Override
     public Announcement findById(int id) {
-        return announcementDao.findById(id);
+        Announcement an = announcementDao.findById(id);
+        // 通过id查找user
+        User user = userDao.findById(an.getUserId());
+        // 设置对应的username
+        an.setUsername(user.getUsername());
+        return an;
     }
 
     /**

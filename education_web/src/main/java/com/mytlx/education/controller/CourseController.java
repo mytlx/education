@@ -3,14 +3,17 @@ package com.mytlx.education.controller;
 import com.mytlx.education.domain.Course;
 import com.mytlx.education.domain.User;
 import com.mytlx.education.service.CourseService;
+import com.mytlx.education.utils.DateUtils;
 import com.mytlx.education.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class CourseController {
     }
 
     @RequestMapping("/findByUser")
-    public ModelAndView findByUser(HttpServletRequest request) {
+    public ModelAndView findByUser(HttpServletRequest request, String msg) {
         User user = (User) request.getSession().getAttribute("user");
 
         List<Course> courseList = courseService.findByUser(user);
@@ -39,18 +42,25 @@ public class CourseController {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("courseList", courseList);
+        mv.addObject("msg", msg);
         mv.setViewName("course-list");
         return mv;
     }
 
     @RequestMapping("/addCourse")
-    public ModelAndView addCourse(Course course, HttpServletRequest request) {
+    public ModelAndView addCourse(Course course, HttpServletRequest request,
+                                  @RequestParam("date1") String date1,
+                                  @RequestParam("time1") String time1) throws ParseException {
         User user = (User) request.getSession().getAttribute("user");
 
         course.setUserId(user.getId());
         course.setId(UUIDUtils.getId());
-        course.setTime(new Date());
+        course.setTime(DateUtils.string2Date(date1 + " " + time1 + ":00", "yyyy-MM-dd HH:mm:ss"));
         boolean flag = courseService.addCourse(course);
+
+        System.out.println(date1);
+        System.out.println(time1);
+        System.out.println(course.getTime());
 
         ModelAndView mv = new ModelAndView();
 
@@ -59,7 +69,7 @@ public class CourseController {
         } else {
             mv.addObject("msg", "添加失败");
         }
-        mv.setViewName("course-list");
+        mv.setViewName("redirect:findByUser");
         return mv;
     }
 

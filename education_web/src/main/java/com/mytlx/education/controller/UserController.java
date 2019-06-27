@@ -1,13 +1,7 @@
 package com.mytlx.education.controller;
 
-import com.mytlx.education.domain.Education;
-import com.mytlx.education.domain.Parent;
-import com.mytlx.education.domain.Teacher;
-import com.mytlx.education.domain.User;
-import com.mytlx.education.service.EducationService;
-import com.mytlx.education.service.ParentService;
-import com.mytlx.education.service.TeacherService;
-import com.mytlx.education.service.UserService;
+import com.mytlx.education.domain.*;
+import com.mytlx.education.service.*;
 import com.mytlx.education.utils.MailUtils;
 import com.mytlx.education.utils.UUIDUtils;
 import javafx.util.Pair;
@@ -40,14 +34,17 @@ public class UserController {
     private TeacherService teacherService;
     private EducationService educationService;
     private ParentService parentService;
+    private NewsService newsService;
 
     @Autowired
     public UserController(UserService userService, TeacherService teacherService,
-                          EducationService educationService, ParentService parentService) {
+                          EducationService educationService, ParentService parentService,
+                          NewsService newsService) {
         this.userService = userService;
         this.teacherService = teacherService;
         this.educationService = educationService;
         this.parentService = parentService;
+        this.newsService = newsService;
     }
 
 
@@ -63,9 +60,6 @@ public class UserController {
         if (user.getUsername() == null)
             return mv;
 
-        System.out.println(user);
-        System.out.println("===============" + autoLogin);
-
         // 调用service方法
         Pair<User, Integer> login = userService.login(user.getUsername(), user.getPassword());
         User find = login.getKey();
@@ -74,7 +68,12 @@ public class UserController {
         if (code == 1) {
             // 将user_id记录在session中
             request.getSession().setAttribute("user", find);
-            mv.setViewName("redirect:/pages/main.jsp");
+
+            // 主页新闻
+            // List<News> newsList = newsService.findAll();
+            // mv.addObject("newsList", newsList);
+
+            mv.setViewName("redirect:index");
             if (autoLogin != null) {
                 // 保存cookie
                 Cookie usernameCookie = null;
@@ -104,7 +103,7 @@ public class UserController {
             request.setAttribute("msg", "审核未通过");
         } else if (code == 0) {
             request.getSession().setAttribute("user", find);
-            mv.setViewName("redirect:/pages/admin.jsp");
+            mv.setViewName("redirect:/pages/admin/admin-index.jsp");
         }
         return mv;
     }
@@ -198,7 +197,7 @@ public class UserController {
     }
 
     @RequestMapping("/findByUserId")
-    public ModelAndView findByUserId(HttpSession session) {
+    public ModelAndView findByUserId(HttpSession session, String op) {
 
         User user = (User) session.getAttribute("user");
 
@@ -215,7 +214,10 @@ public class UserController {
             mv.addObject("info", education);
         }
 
-        mv.setViewName("person-info");
+        if (op.equals("info"))
+            mv.setViewName("person-info");
+        else if (op.equals("update"))
+            mv.setViewName("update-info");
 
         return mv;
     }
@@ -230,7 +232,7 @@ public class UserController {
         mv.addObject("userList", userList);
         mv.addObject("msg", msg);
 
-        mv.setViewName("admin-permission");
+        mv.setViewName("admin/admin-permission");
 
         return mv;
     }
@@ -292,5 +294,87 @@ public class UserController {
         mv.setViewName("../index");
         return mv;
     }
+
+    @RequestMapping("/index")
+    public ModelAndView index(String msg) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("msg", msg);
+
+        List<News> newsList = newsService.findAll();
+        mv.addObject("newsList", newsList);
+        // TODO: video
+
+        mv.setViewName("main");
+        return mv;
+    }
+
+    /**
+     * 通过传入的userId查找相关user及相关信息
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("findByParamId")
+    public ModelAndView findByParamId(String id, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("other-person-info");
+
+        User login = (User) session.getAttribute("user");
+
+        // 通过id查询user信息
+        User user = userService.findById(id);
+
+        if (user != null) {
+            switch (user.getVerification()) {
+                case 1:
+                    Parent parent = parentService.findByUserId(user.getId());
+                    // 添加ver辨别身份信息
+                    mv.addObject("ver", "1");
+                    mv.addObject("info", parent);
+                    break;
+                case 4:
+                    Teacher teacher = teacherService.findByUserId(user.getId());
+                    mv.addObject("ver", "4");
+                    mv.addObject("info", teacher);
+                    break;
+                case 5:
+                    Education education = educationService.findByUserId(user.getId());
+                    mv.addObject("ver", "5");
+                    mv.addObject("info", education);
+                    break;
+            }
+
+            if (login.getId().equals(user.getId())) {
+                mv.setViewName("person-info");
+            }
+        }
+        return mv;
+
+    }
+
+    // @RequestMapping("/updatePersonalInfo")
+    // public ModelAndView updatePersonalInfo(HttpSession session) {
+    //     ModelAndView mv = new ModelAndView();
+    //     User user = (User) session.getAttribute("user");
+    //     if (user != null) {
+    //         switch (user.getVerification()) {
+    //             case 1:
+    //                 Parent parent = parentService.findByUserId(user.getId());
+    //                 mv.addObject("info", parent);
+    //                 break;
+    //             case 4:
+    //                 Teacher teacher = teacherService.findByUserId(user.getId());
+    //                 mv.addObject("info", teacher);
+    //                 break;
+    //             case 5:
+    //                 Education education = educationService.findByUserId(user.getId());
+    //                 mv.addObject("info", education);
+    //                 break;
+    //         }
+    //         mv.setViewName("update-info");
+    //     }
+    //     return mv;
+    // }
+
 
 }

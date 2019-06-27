@@ -88,14 +88,15 @@ public class NewsController {
     }
 
     @RequestMapping("/findById")
-    public ModelAndView findById(int id) {
+    public ModelAndView findById(int id, String op) {
         ModelAndView mv = new ModelAndView();
 
         News news = newsService.findById(id);
 
         mv.addObject("news", news);
-
         mv.setViewName("news-update");
+        if (op.equals("info"))
+            mv.setViewName("news-info");
         return mv;
     }
 

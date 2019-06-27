@@ -47,6 +47,7 @@
             border-radius: 3px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
+
         .custom-table {
             border-spacing: 2px;
             border-color: grey;
@@ -65,9 +66,11 @@
 
         }
 
-        td {
-            min-width: 70px;
-            /*display:block;*/
+        .custom-td {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 12rem;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -77,39 +80,97 @@
 <jsp:include page="${pageContext.request.contextPath}/pages/header.jsp"/>
 <!-- //header -->
 
-<div class="inner-banner-w3ls py-5 custom-div">
-    <a href="${pageContext.request.contextPath}/pages/add-course.jsp">
-        <h3>添加课程</h3>
-    </a>
-
-    <h3>${requestScope.msg}</h3>
-    <table border="1" class="custom-table">
-        <tr class="custom-tr">
-            <th>id</th>
-            <th>userId</th>
-            <th>name</th>
-            <th>time</th>
-            <th>address</th>
-            <th>teacher</th>
-            <th>content</th>
-            <th>fee</th>
-        </tr>
-        <c:forEach var="course" items="${courseList}">
-            <tr class="custome-td">
-                <td>${course.id}</td>
-                <td>${course.userId}</td>
-                <td>${course.name}</td>
-                <td>${course.timeStr}</td>
-                <td>${course.address}</td>
-                <td>${course.teacher}</td>
-                <td>${course.content}</td>
-                <td>${course.fee}</td>
-            </tr>
-        </c:forEach>
-    </table>
+<div id="home">
+    <!-- testimonials -->
+    <section class="clients py-5" id="testi">
+        <div class="container py-xl-5 py-lg-3">
+            <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">What Students Say</h3>
+            <div class="feedback-info text-center">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sedc dnmo eiusmod.
+                    sed do eiusmod tempor
+                    incididunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi</p>
+                <img src="../img/te1.jpg" alt=" " class="img-fluid mt-5">
+                <h4 class="mt-4 text-wh font-weight-bold mb-4">Mary Jane</h4>
+            </div>
+        </div>
+    </section>
+    <!-- //testimonials -->
 </div>
-<a href="${pageContext.request.contextPath}/pages/main.jsp">返回</a>
+
+<!-- courses -->
+<section class="branches py-5" id="courses" style=" background-color: #f8f9fe;">
+    <div class="container py-xl-5 py-lg-3">
+        <h3 class="title-w3 mb-5 text-center font-weight-bold">Course List</h3>
+        <div class="card-title pr" style="text-align: center; color:red">
+            <%--<h4>All Exam Result</h4>--%>
+            <h3>${requestScope.msg}</h3>
+        </div>
+        <div style="overflow: hidden">
+            <div class="card-title pr" style="float:left">
+                <a href="${pageContext.request.contextPath}/pages/course-add.jsp">
+                    <h5>添加课程</h5>
+                </a>
+            </div>
+            <div class="card-title pr" style="float: right">
+                <a href="${pageContext.request.contextPath}/user/index">
+                    <h5>返回</h5>
+                </a>
+            </div>
+        </div>
+        <div class="row branches-position pt-lg-4" style=" padding-top: 0 !important;">
+            <div class="card" style="background: #fff; font-family: none; margin:0 auto">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table student-data-table m-t-20">
+                            <thead>
+                            <tr>
+                                <th>CourseId</th>
+                                <th>UserId</th>
+                                <th>CourseName</th>
+                                <th>Teacher</th>
+                                <th>Fee</th>
+                                <th>Address</th>
+                                <th>Time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="course" items="${courseList}">
+                                <tr>
+                                    <td class="custom-td">${course.id}</td>
+                                    <td>${course.userId}</td>
+                                    <td>${course.name}</td>
+                                    <td>${course.teacher}</td>
+                                    <td>￥${course.fee}</td>
+                                    <td>${course.address}</td>
+                                    <td>${course.timeStr}</td>
+                                        <%--<td>${course.content}</td>--%>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //places -->
 
 
+<!-- footer -->
+<jsp:include page="${pageContext.request.contextPath}/pages/footer.jsp"/>
+<!-- //footer -->
+
+<!-- copyright -->
+<jsp:include page="${pageContext.request.contextPath}/pages/copyright.jsp"/>
+
+<!-- //copyright -->
+<!-- move top icon -->
+<a href="#home" class="move-top text-center">
+    <span class="fa fa-angle-double-up" aria-hidden="true"></span>
+</a>
+<!-- //move top icon -->
 </body>
 </html>

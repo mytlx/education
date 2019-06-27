@@ -27,7 +27,7 @@
                 <nav>
                     <ul class="menu">
                         <li>
-                            <a href="${pageContext.request.contextPath}/pages/main.jsp">
+                            <a href="${pageContext.request.contextPath}/user/index">
                                 Home
                             </a>
                         </li>
@@ -75,7 +75,7 @@
 
                             <!-- 共有的三项 -->
                             <li>
-                                <a href="${pageContext.request.contextPath}/pages/update-info.jsp">
+                                <a href="${pageContext.request.contextPath}/user/findByUserId?op=update">
                                     信息修改
                                 </a>
                             </li>
@@ -85,7 +85,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/user/findByUserId">
+                                <a href="${pageContext.request.contextPath}/user/findByUserId?op=info">
                                     个人信息
                                 </a>
                             </li>

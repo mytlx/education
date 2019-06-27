@@ -20,8 +20,8 @@ public interface AnnouncementDao {
      * @param announcement
      * @return
      */
-    @Insert("insert into announcement(user_id, title, text_content, picture) values(" +
-            "#{userId}, #{title}, #{textContent}, #{picture})")
+    @Insert("insert into announcement(user_id, title, text_content, time, picture) values(" +
+            "#{userId}, #{title}, #{textContent}, #{time}, #{picture})")
     @SelectKey(resultType = Integer.class, keyColumn = "id", before = true,
             statement = "SELECT LAST_INSERT_ID() AS id", keyProperty = "id")
     int addAnnounce(Announcement announcement);
@@ -38,6 +38,7 @@ public interface AnnouncementDao {
             @Result(column = "user_id", property = "userId"),
             @Result(column = "title", property = "title"),
             @Result(column = "text_content", property = "textContent"),
+            @Result(column = "time", property = "time"),
             @Result(column = "picture", property = "picture"),
     })
     List<Announcement> findByUserId(@Param("userId") String userId);
@@ -52,7 +53,7 @@ public interface AnnouncementDao {
     int deleteById(@Param("id") int id);
 
     @Update("update announcement set title = #{an.title}, text_content = #{an.textContent}," +
-            "picture = #{an.picture} where id = #{an.id}")
+            "time = #{an.time}, picture = #{an.picture} where id = #{an.id}")
     int updateById(@Param("an") Announcement an);
 
     @Select("select * from announcement where id = #{id}")
@@ -70,13 +71,18 @@ public interface AnnouncementDao {
      *
      * @return
      */
-    @Select("select * from announcement")
+    @Select("SELECT a.id, a.user_id, a.title, a.text_content, a.time, a.picture, " +
+            "u.username " +
+            "FROM announcement a LEFT JOIN user u " +
+            "ON a.user_id = u.id ")
     @Results(value = {
             @Result(id = true, column = "id", property = "id"),
             @Result(column = "user_id", property = "userId"),
             @Result(column = "title", property = "title"),
             @Result(column = "text_content", property = "textContent"),
+            @Result(column = "time", property = "time"),
             @Result(column = "picture", property = "picture"),
+            @Result(column = "username", property = "username"),
     })
     List<Announcement> findAll();
 }
