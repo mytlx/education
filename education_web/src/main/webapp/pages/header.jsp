@@ -35,7 +35,7 @@
                         <c:if test="${not empty sessionScope.user}">
                             <!-- 学生家长 -->
                             <c:if test="${sessionScope.user.verification == 1}">
-                                <li><a href="">个人课程表</a></li>
+                                <li><a href="${pageContext.request.contextPath}/course/findPurchase">个人课程表</a></li>
                                 <li>
                                     <a href="${pageContext.request.contextPath}/course/findAll">
                                         查询
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/announcement/findAll">
+                                <a href="${pageContext.request.contextPath}/announcement/findAll?ver=1">
                                     通知公告
                                 </a>
                             </li>

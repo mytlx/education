@@ -78,8 +78,13 @@ public class CourseController {
         User user = (User) session.getAttribute("user");
         List<Course> courseList = courseService.findAll(user.getId());
 
+        // 此处应添加课程的购买信息
+        List<Course> purchaseList = courseService.findPurchase(user.getId());
+
         ModelAndView mv = new ModelAndView();
         mv.addObject("courseList", courseList);
+        mv.addObject("purchaseList", purchaseList);
+
         if (msg != null)
             mv.addObject("msg", msg);
         mv.setViewName("search-course-list");
@@ -92,6 +97,19 @@ public class CourseController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("course", course);
         mv.setViewName("course-info");
+        return mv;
+    }
+
+    @RequestMapping("/findPurchase")
+    public ModelAndView findPurchase(HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        User user = (User) session.getAttribute("user");
+
+        List<Course> courseList = courseService.findPurchase(user.getId());
+
+        mv.addObject("courseList", courseList);
+        mv.setViewName("course-list");
+
         return mv;
     }
 

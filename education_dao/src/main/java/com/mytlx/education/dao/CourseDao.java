@@ -91,4 +91,21 @@ public interface CourseDao {
             @Result(column = "fee", property = "fee")
     })
     Course findById(@Param("id") String id);
+
+    @Select("SELECT c.id, c.user_id, c.name, c.time, c.address, c.teacher, c.content, c.fee " +
+            "FROM course c " +
+            "LEFT JOIN `order` o " +
+            "ON c.id = o.course_id " +
+            "WHERE o.user_id = #{userId}")
+    @Results(value = {
+            @Result(id = true, column = "id", property = "id"),
+            @Result(column = "user_id", property = "userId"),
+            @Result(column = "name", property = "name"),
+            @Result(column = "time", property = "time"),
+            @Result(column = "address", property = "address"),
+            @Result(column = "teacher", property = "teacher"),
+            @Result(column = "content", property = "content"),
+            @Result(column = "fee", property = "fee")
+    })
+    List<Course> findPurchase(@Param("userId") String userId);
 }

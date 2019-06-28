@@ -36,7 +36,7 @@
                     <i class="ti-user"></i> 权限审核</a>
                 </li>
 
-                <li><a href="${pageContext.request.contextPath}/announcement/findAll">
+                <li><a href="${pageContext.request.contextPath}/announcement/findAll?ver=0">
                     <i class="ti-files"></i> 公告</a>
                 </li>
 
@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/pages/admin/admin-news-add.jsp">
                                 发布新闻
                             </a>
                         </li>

@@ -77,7 +77,7 @@ public class ParentController {
         Parent parent = parentService.findById(id);
         ModelAndView mv = new ModelAndView();
         mv.addObject("parent", parent);
-        mv.setViewName("parent-info");
+        mv.setViewName("person-info");
         return mv;
     }
 

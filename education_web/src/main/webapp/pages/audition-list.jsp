@@ -73,6 +73,11 @@
             max-width: 17rem;
             white-space: nowrap;
         }
+
+        .tlx-bg {
+            background: url(../img/1.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+        }
     </style>
 </head>
 <body>
@@ -83,7 +88,7 @@
 
 <div id="home">
     <!-- testimonials -->
-    <section class="clients py-5" id="testi">
+    <section class="clients py-5 tlx-bg" id="testi">
         <div class="container py-xl-5 py-lg-3">
             <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">What Students Say</h3>
             <div class="feedback-info text-center">
@@ -136,7 +141,7 @@
                                 <tr>
                                     <td class="custom-td">${audition.id}</td>
                                     <td class="custom-td">${audition.courseId}</td>
-                                    <td class=" custom-td">${audition.parentId}</td>
+                                    <td class=" custom-td">${audition.userId}</td>
                                     <td>${audition.stateStr}</td>
                                     <td>
                                         <c:if test="${audition.state == 1}">

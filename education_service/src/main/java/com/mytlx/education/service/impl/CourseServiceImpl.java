@@ -54,4 +54,9 @@ public class CourseServiceImpl implements CourseService {
     public Course findById(String id) {
         return courseDao.findById(id);
     }
+
+    @Override
+    public List<Course> findPurchase(String userId) {
+        return courseDao.findPurchase(userId);
+    }
 }

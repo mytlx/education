@@ -189,11 +189,10 @@ public class UserController {
         boolean isActive = userService.active(code);
         if (isActive) {
             model.addAttribute("msg", "已成功激活账户，请登录！");
-            return "login";
         } else {
             model.addAttribute("msg", "激活失败！");
-            return "info";
         }
+        return "login";
     }
 
     @RequestMapping("/findByUserId")
@@ -272,7 +271,7 @@ public class UserController {
             mv.addObject("identity", "education");
         }
 
-        mv.setViewName("admin-permission-info");
+        mv.setViewName("admin/admin-permission-info");
         return mv;
     }
 

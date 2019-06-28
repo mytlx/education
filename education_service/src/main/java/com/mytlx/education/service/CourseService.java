@@ -42,4 +42,6 @@ public interface CourseService {
      * @return
      */
     Course findById(String id);
+
+    List<Course> findPurchase(String userId);
 }

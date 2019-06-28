@@ -26,11 +26,12 @@
     <link href="../../assets/css/style.css" rel="stylesheet">
 
     <style>
-        .tlx-td {
+        .table td {
             text-overflow: ellipsis;
             overflow: hidden;
-            max-width: 8rem;
+            min-width: 5rem;
             white-space: nowrap;
+            text-align: left !important;
         }
 
         a {
@@ -65,12 +66,15 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Permission Info</a></li>
+                                <li class="breadcrumb-item">
+                                    <a href="${pageContext.request.contextPath}/user/findPermission">
+                                        Permission</a>
+                                </li>
                                 <li class="breadcrumb-item active">Home</li>
                             </ol>
                         </div>
                     </div>
-                </div>
-                <!-- /# column -->
+                </div>                <!-- /# column -->
             </div>
             <!-- /# row -->
             <section id="main-content">
@@ -80,56 +84,102 @@
                         <div class="card">
                             <div class="card-title pr">
                                 <h4>权限申请人信息</h4><br>
+                                <div style="float: right; margin-right: 1rem">
+                                    <a href="${pageContext.request.contextPath}/user/findPermission">
+                                        <h4 style="color: deepskyblue">返回</h4>
+                                    </a>
+                                </div>
                                 <h3 style="color: red">${requestScope.msg}</h3>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <c:if test="${not empty requestScope.userList}">
+                                    <!-- 个人教师 -->
+                                    <c:if test="${requestScope.identity == 'teacher'}">
                                         <table class="table student-data-table m-t-20">
-
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>${info.id}</td>
+                                            </tr>
                                             <tr>
                                                 <th>UserId</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
-                                                <th>Tel</th>
-                                                <th>状态</th>
-                                                <th>激活码</th>
-                                                <th>申请情况</th>
-                                                <th>操作</th>
+                                                <td>${info.userId}</td>
                                             </tr>
-                                            <tbody>
-                                            <c:forEach var="user" items="${requestScope.userList}">
-                                                <tr>
-                                                    <td>${user.id}</td>
-                                                    <td>
-                                                        <a href="${pageContext.request.contextPath}/user/findRequestInfoByUserId?id=${user.id}&ver=${user.verification}">
-                                                                ${user.username}
-                                                        </a>
-                                                    </td>
-                                                    <td>${user.email}</td>
-                                                    <td>${user.tel}</td>
-                                                    <td>${user.stateStr}</td>
-                                                    <td class="tlx-td">${user.code}</td>
-                                                    <td>${user.verificationStr}</td>
-                                                    <td>
-                                                        <a href="${pageContext.request.contextPath}/user/auditPermission?id=${user.id}&op=pass"
-                                                           style="color: #0d71bb">
-                                                            通过
-                                                        </a>
-                                                        <a href="${pageContext.request.contextPath}/user/auditPermission?id=${user.id}&op=reject"
-                                                           style="color: #0d71bb">
-                                                            拒绝
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <td>${info.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>性别</th>
+                                                <td>${info.sex}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>年龄</th>
+                                                <td>${info.age}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>教育领域</th>
+                                                <td>${info.subject}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>从教年限</th>
+                                                <td>${info.time}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>教育适合年龄</th>
+                                                <td>${info.ageRange}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>身份证号</th>
+                                                <td>${info.idNumber}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>联系方式</th>
+                                                <td>${info.tel}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>简介</th>
+                                                <td>${info.info}</td>
+                                            </tr>
                                         </table>
                                     </c:if>
-                                    <c:if test="${empty requestScope.userList}">
-                                        <h3>无申请审核的账号</h3>
-                                    </c:if>
 
+                                    <!-- 培训机构 -->
+                                    <c:if test="${requestScope.identity == 'education'}">
+                                        <table class="table student-data-table m-t-20">
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>${info.id}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>UserId</th>
+                                                <td>${info.userId}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>教育领域</th>
+                                                <td>${info.subject}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>标识码</th>
+                                                <td>${info.idCode}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>店铺地址</th>
+                                                <td>${info.address}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>教育适合年龄</th>
+                                                <td>${info.ageRange}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>联系方式</th>
+                                                <td>${info.tel}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>简介</th>
+                                                <td>${info.info}</td>
+                                            </tr>
+                                        </table>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

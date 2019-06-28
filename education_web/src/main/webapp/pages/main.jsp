@@ -70,6 +70,11 @@
             margin-right: 2rem;
         }
 
+        .tlx-bg {
+            background: url(../img/bg1.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+        }
+
 
     </style>
 
@@ -161,6 +166,36 @@
     </div>
 </div>
 <!-- //apps -->
+
+<!-- testimonials -->
+<section class="clients py-5 tlx-bg" id="testi">
+    <div class="container py-xl-5 py-lg-3">
+        <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">My School Video</h3>
+        <div class="feedback-info text-center">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sedc dnmo eiusmod.
+                sed do eiusmod tempor
+                incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi</p>
+            <img src="../img/t1.png" alt=" " class="img-fluid mt-5">
+            <h4 class="mt-4 text-wh font-weight-bold mb-4">Alizee Leah</h4>
+        </div>
+    </div>
+</section>
+<!-- //testimonials -->
+
+<!-- apps -->
+<div class="apps_w3w3pvt bg-li py-5" id="apps">
+    <div class="container py-xl-5 py-lg-3">
+        <h3 class="title-w3 mb-2 text-center text-bl font-weight-bold">Video</h3>
+        <p class="text-center title-w3 mb-md-5 mb-4">Excepteur sint occaecat cupidatat</p>
+    </div>
+    <%--<div class="img-podi-w3ls">--%>
+        <%--<span class="fa fa-leanpub"></span>--%>
+    <%--</div>--%>
+
+
+</div>
 
 
 <!-- footer -->

@@ -75,6 +75,11 @@
             max-width: 6rem;
             white-space: nowrap;
         }
+
+        .tlx-bg {
+            background: url(../img/bg1.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +90,7 @@
 
 <div id="home">
     <!-- testimonials -->
-    <section class="clients py-5" id="testi">
+    <section class="clients py-5 tlx-bg" id="testi">
         <div class="container py-xl-5 py-lg-3">
             <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">What Students Say</h3>
             <div class="feedback-info text-center">
@@ -155,7 +160,8 @@
                                         <c:if test="${course.state == 3}">
                                             ${course.stateStr}
                                         </c:if>
-                                        <a href="">购买</a>
+                                        <a href="${pageContext.request.contextPath}/order/addOrder?cid=${course.id}&fee=${course.fee}">
+                                            购买</a>
                                     </td>
                                         <%--<td>${course.content}</td>--%>
                                 </tr>

@@ -1,12 +1,15 @@
 package com.mytlx.education.controller;
 
 import com.mytlx.education.domain.News;
+import com.mytlx.education.domain.User;
 import com.mytlx.education.service.NewsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -44,12 +47,14 @@ public class NewsController {
     @RequestMapping("/findAll")
     public ModelAndView findAll(String msg) {
         ModelAndView mv = new ModelAndView();
+        // User user = (User) session.getAttribute("user");
 
         List<News> newsList = newsService.findAll();
 
         mv.addObject("newsList", newsList);
         mv.addObject("msg", msg);
-        mv.setViewName("admin-news");
+        mv.setViewName("admin/admin-news");
+
 
         return mv;
     }
@@ -88,15 +93,23 @@ public class NewsController {
     }
 
     @RequestMapping("/findById")
-    public ModelAndView findById(int id, String op) {
+    public ModelAndView findById(@Param("id") int id, @Param("op") String op, HttpSession session) {
         ModelAndView mv = new ModelAndView();
+        User user = (User) session.getAttribute("user");
 
         News news = newsService.findById(id);
 
         mv.addObject("news", news);
         mv.setViewName("news-update");
-        if (op.equals("info"))
+        if (op.equals("info")) {
             mv.setViewName("news-info");
+            if (user.getVerification() == 0)
+                mv.setViewName("admin/admin-news-info");
+        } else {
+            if(user.getVerification() == 0)
+                mv.setViewName("admin/admin-news-update");
+        }
+
         return mv;
     }
 

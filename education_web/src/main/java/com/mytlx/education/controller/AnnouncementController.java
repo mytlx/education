@@ -4,6 +4,7 @@ import com.mytlx.education.domain.Announcement;
 import com.mytlx.education.domain.User;
 import com.mytlx.education.service.AnnouncementService;
 import com.mytlx.education.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,15 +122,19 @@ public class AnnouncementController {
      * @return
      */
     @RequestMapping("/findById")
-    public ModelAndView findById(int id, String op) {
+    public ModelAndView findById(int id, String op, HttpSession session) {
         Announcement announcement = announcementService.findById(id);
         ModelAndView mv = new ModelAndView();
+        User user = (User) session.getAttribute("user");
 
         mv.addObject("announcement", announcement);
 
         mv.setViewName("announcement-update");
-        if (op.equals("info"))
+        if (op.equals("info")) {
             mv.setViewName("announcement-info");
+            if (user.getVerification() == 0)
+                mv.setViewName("admin/admin-announcement-info");
+        }
         return mv;
     }
 
@@ -139,7 +144,7 @@ public class AnnouncementController {
      * @return
      */
     @RequestMapping("/findAll")
-    public ModelAndView findAll(String msg) {
+    public ModelAndView findAll(@Param("ver") String ver, String msg) {
         ModelAndView mv = new ModelAndView();
 
         List<Announcement> announcementList = announcementService.findAll();
@@ -148,6 +153,8 @@ public class AnnouncementController {
         mv.addObject("msg", msg);
 
         mv.setViewName("announcement");
+        if (ver.equals("0"))
+            mv.setViewName("admin/admin-announcement");
 
         return mv;
     }

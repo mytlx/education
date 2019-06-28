@@ -15,8 +15,8 @@
     <div class="container">
         <div class="row">
             <!-- copyright -->
-            <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">Copyright &copy; 2019.Company
-                name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+            <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">Copyright &copy; 2019.My
+                School All rights reserved.
             </p>
             <!-- //copyright -->
             <!-- social icons -->

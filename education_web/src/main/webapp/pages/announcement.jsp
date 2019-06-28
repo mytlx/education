@@ -104,6 +104,10 @@
             margin-right: 2rem;
         }
 
+        .tlx-bg {
+            background: url(../img/bg3.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+        }
 
     </style>
 </head>
@@ -115,7 +119,7 @@
 
 <div id="home">
     <!-- testimonials -->
-    <section class="clients py-5" id="testi">
+    <section class="clients py-5 tlx-bg" id="testi">
         <div class="container py-xl-5 py-lg-3">
             <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">What Students Say</h3>
             <div class="feedback-info text-center">

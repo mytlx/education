@@ -72,6 +72,12 @@
             max-width: 12rem;
             white-space: nowrap;
         }
+
+        .tlx-bg {
+            background: url(../img/bg1.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+        }
+
     </style>
 </head>
 <body>
@@ -82,7 +88,7 @@
 
 <div id="home">
     <!-- testimonials -->
-    <section class="clients py-5" id="testi">
+    <section class="clients py-5 tlx-bg" id="testi">
         <div class="container py-xl-5 py-lg-3">
             <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">What Students Say</h3>
             <div class="feedback-info text-center">
@@ -107,18 +113,20 @@
             <%--<h4>All Exam Result</h4>--%>
             <h3>${requestScope.msg}</h3>
         </div>
-        <div style="overflow: hidden">
-            <div class="card-title pr" style="float:left">
-                <a href="${pageContext.request.contextPath}/pages/course-add.jsp">
-                    <h5>添加课程</h5>
-                </a>
+        <c:if test="${sessionScope.user.verification == 4 or sessionScope.user.verification == 5}">
+            <div style="overflow: hidden">
+                <div class="card-title pr" style="float:left">
+                    <a href="${pageContext.request.contextPath}/pages/course-add.jsp">
+                        <h5>添加课程</h5>
+                    </a>
+                </div>
+                <div class="card-title pr" style="float: right">
+                    <a href="${pageContext.request.contextPath}/user/index">
+                        <h5>返回</h5>
+                    </a>
+                </div>
             </div>
-            <div class="card-title pr" style="float: right">
-                <a href="${pageContext.request.contextPath}/user/index">
-                    <h5>返回</h5>
-                </a>
-            </div>
-        </div>
+        </c:if>
         <div class="row branches-position pt-lg-4" style=" padding-top: 0 !important;">
             <div class="card" style="background: #fff; font-family: none; margin:0 auto">
                 <div class="card-body">
